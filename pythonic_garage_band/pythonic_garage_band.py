@@ -1,22 +1,11 @@
 from abc import abstractmethod
 
-class Band():
-    instances = []
-    def __init__(self,name,arr):
-        self.name=name
-        self.members=arr
-        Band.instances.append(self)
-    @classmethod
-    def to_list(cls):
-        return cls.instances
-    def play_solos(self):
-        solos=[]
-        for i in self.members:
-            solos.append(i.play_solo())
-        return solos
-
 
 class Musician():
+
+     def __init__(self,arr):
+        self.members = arr
+
      @abstractmethod
      def __str__(self):
          pass
@@ -29,6 +18,25 @@ class Musician():
      @abstractmethod
      def play_solo(self):
          pass
+
+
+class Band(Musician):
+    instances = []
+    def __init__(self,name,arr):
+        self.name=name
+        super().__init__(arr)
+        Band.instances.append(self)
+    @classmethod
+    def to_list(cls):
+        return cls.instances
+    def play_solos(self):
+        solos=[]
+        for i in self.members:
+            solos.append(i.play_solo())
+        return solos
+
+
+
 
 class Guitarist(Musician):
     def __init__(self,name):
